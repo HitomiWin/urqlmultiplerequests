@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from "react"
 import { useQuery } from "urql"
-import { ModelQuery } from "../__mocked_generated__/graphql"
+import {
+	CarsDocument,
+	VehicleSpeedDocument,
+} from "../__mocked_generated__/graphql"
 
 const Comp2 = () => {
-	const [someState1, setSomeState1] = useState<boolean | null>(null)
-	const [{ data, fetching }] = useQuery({
-		query: ModelQuery,
-		pause: someState1 ?? false,
+	const [{ data: vechicleSpeed, fetching }] = useQuery({
+		query: VehicleSpeedDocument,
 	})
 
-	// Update state 1
-	useEffect(() => {
-		const timeout = window.setTimeout(() => {
-			setSomeState1(false)
-		}, 200)
+	const [{ data: cars, fetching: fetchingCars }] =
+		useQuery({
+			query: CarsDocument,
+		})
 
-		return () => window.clearTimeout(timeout)
-	}, [])
-
-	// Update state 1
-	useEffect(() => {
-		const timeout = window.setTimeout(() => {
-			setSomeState1(true)
-		}, 400)
-
-		return () => window.clearTimeout(timeout)
-	}, [])
-
-	if (fetching) {
+	if (fetching || fetchingCars) {
 		return null
 	}
 
-	return <div>{data.cars.model.name}</div>
+	return (
+		<>
+			<div>Component 2</div>
+			<pre>{JSON.stringify(cars, null, 2)}</pre>
+			<pre>{JSON.stringify(vechicleSpeed, null, 2)}</pre>
+		</>
+	)
 }
 
 export default Comp2

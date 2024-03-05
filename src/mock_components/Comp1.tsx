@@ -1,57 +1,76 @@
 import React, { FC, useEffect, useState } from "react"
-import { useData } from "../hooks/useData"
-import { Comp1SubComponent } from "./Comp1SubComponent"
+import { Vehicles } from "./Vehicles"
+import { CarAndBicycle } from "./CarAndBicyle"
+import {
+	BicycleNameDocument,
+	CarColorsDocument,
+	CarNameDocument,
+	VehicleSpeedDocument,
+} from "../__mocked_generated__/graphql"
+import { useQuery } from "urql"
 
 const Comp1: FC = () => {
-	const [someState1, setSomeState1] = useState<boolean | null>(null)
-	const [someState2, setSomeState2] = useState<boolean | undefined>(undefined)
+	const [carId, setCarId] = useState<number>()
+	const [bicycleId, setBicycleId] = useState<number>()
 
-	// Update state 1
+	const [{ data: bicycleName, fetching: fetchingBicycleName }] = useQuery({
+		query: BicycleNameDocument,
+		variables: {
+			id: bicycleId,
+		},
+	})
+
+	const [{ data: carColors, fetching: fetchingCarColors }] = useQuery({
+		query: CarColorsDocument,
+		variables: {
+			id: carId,
+		},
+	})
+
+	const [{ data: carName, fetching: fetchingCarName }] = useQuery({
+		query: CarNameDocument,
+		variables: {
+			id: carId,
+		},
+	})
+
+	const [{ data: vehicleSpeed, fetching: fetchingVehicleSpeed }] = useQuery({
+		query: VehicleSpeedDocument,
+	})
+
+	// Update carId
 	useEffect(() => {
 		const timeout = window.setTimeout(() => {
-			setSomeState1(true)
+			setBicycleId(1)
 		}, 200)
 
 		return () => window.clearTimeout(timeout)
 	}, [])
 
-	// Update state 2
+	// Update bicycleId
 	useEffect(() => {
 		const timeout = window.setTimeout(() => {
-			setSomeState2(true)
-		}, 500)
+			setCarId(1)
+		}, 200)
 
 		return () => window.clearTimeout(timeout)
 	}, [])
 
-	// Update state 3
-	useEffect(() => {
-		const timeout = window.setTimeout(() => {
-			setSomeState2(false)
-		}, 600)
-
-		return () => window.clearTimeout(timeout)
-	}, [])
-
-	// Update state 4
-	useEffect(() => {
-		const timeout = window.setTimeout(() => {
-			setSomeState2(true)
-		}, 700)
-
-		return () => window.clearTimeout(timeout)
-	}, [])
-
-	const { data, loading } = useData(someState1 ?? false, someState2)
-
-	if (loading) {
+	if (
+		fetchingCarColors ||
+		fetchingCarName ||
+		fetchingVehicleSpeed ||
+		fetchingBicycleName
+	) {
 		return null
 	}
 
 	return (
 		<>
-			<div>{JSON.stringify(data, null, 2)}</div>
-			<Comp1SubComponent />
+			<pre>{JSON.stringify({ carColors, carName, vehicleSpeed }, null, 2)}</pre>
+			<pre>{JSON.stringify(bicycleName, null, 2)}</pre>
+			<Vehicles />
+			<CarAndBicycle carId={carId ?? 1} bicycleId={bicycleId ?? 1} />
 		</>
 	)
 }

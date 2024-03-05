@@ -4,24 +4,15 @@ const delayForDemo = (promise) => {
 	}).then(() => promise)
 }
 
-// const Comp1 = lazy(() => delayForDemo(import('./Comp1')));
-// const Comp2 = lazy(() => delayForDemo(import('./Comp2')));
-// const Comp3 = lazy(() => delayForDemo(import('./Comp3')));
-// const Comp4 = lazy(() => delayForDemo(import('./Comp4')));
-// const Comp5 = lazy(() => delayForDemo(import('./Comp5')));
-
 const Comp1 = () => delayForDemo(import("./Comp1"))
 const Comp2 = () => delayForDemo(import("./Comp2"))
-const Comp3 = () => delayForDemo(import("./Comp3"))
-const Comp4 = () => delayForDemo(import("./Comp4"))
-const Comp5 = () => delayForDemo(import("./Comp5"))
 
 let routeNumber = 0
 const getRoute = () => {
 	return `route${++routeNumber}`
 }
 let isDefaultModuleSet = false
-const modules = [Comp1, Comp2, Comp3, Comp4, Comp5].map((component) => {
+const modules = [Comp1, Comp2].map((component) => {
 	let defaultModule = false
 	if (!isDefaultModuleSet) {
 		isDefaultModuleSet = true

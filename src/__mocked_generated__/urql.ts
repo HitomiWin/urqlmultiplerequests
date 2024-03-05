@@ -1,5 +1,15 @@
 import { sleep } from "../sleep"
 
+const getNumberOfCars = async (): Promise<number> => {
+	await sleep(20)
+	return 4
+}
+
+const getNumberOfBicycles = async (): Promise<number> => {
+	await sleep(20)
+	return 4
+}
+
 let number = 25
 const generateNumber = () => {
 	return ++number
@@ -15,35 +25,68 @@ export const resolvers = {
 				age: 25,
 			}
 		},
-		cars: () => {
+		vehicle: async () => {
+			console.count("Query:vehicle")
+			await sleep(50)
 			return {}
 		},
 	},
 
-	Cars: {
-		car: async () => {
-			console.count("car query")
-			await sleep(200)
-			return {
-				id: "car",
-				name: "Saab",
+	Vehicle: {
+		car: async (_parent: never, args: { readonly id: number }) => {
+			console.count("Vehicle:car")
+			const count = await getNumberOfCars()
+			if (args.id >= 0 && args.id < count) {
+				return {
+					id: args.id,
+				}
 			}
 		},
-		model: async () => {
-			console.count("Model query")
-			await sleep(200)
-			return {
-				id: "car",
-				name: "9-3",
+		cars: async () => {
+			console.count("Vehicle:cars")
+			const count = await getNumberOfCars()
+			return [...Array(count).keys()].map((id) => ({ id }))
+		},
+		bicycle: async (_parent: never, args: { readonly id: number }) => {
+			console.count("Vehicle:bicycle")
+			const count = await getNumberOfBicycles()
+			if (args.id >= 0 && args.id < count) {
+				return { id: args.id }
 			}
 		},
-		retail: async () => {
-			console.count("Retail query")
-			await sleep(50)
-			return {
-				id: "retail",
-				name: "epic-cars",
-			}
+		bicycles: async () => {
+			console.count("Vehicle:bicycles")
+			const count = await getNumberOfBicycles()
+			return [...Array(count).keys()].map((id) => ({ id }))
+		},
+		speed: async (): Promise<string> => {
+			console.count("Vehicle:speed")
+			await sleep(80)
+
+			return "90km/h"
+		},
+	},
+
+	Car: {
+		name: async (parent): Promise<string> => {
+			console.count("Car:name")
+			await sleep(40)
+
+			return `Car_${parent.id}`
+		},
+		colors: async (): Promise<ReadonlyArray<string>> => {
+			console.count("Car:colors")
+			await sleep(110)
+
+			return ["red", "blue", "green"]
+		},
+	},
+
+	Bicycle: {
+		name: async (parent) => {
+			console.count("Bicycle:name")
+			await sleep(20)
+			return `Bicycle_${parent.id}`
 		},
 	},
 

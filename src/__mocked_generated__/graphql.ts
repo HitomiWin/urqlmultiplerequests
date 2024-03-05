@@ -4,37 +4,36 @@ import { resolvers } from "./urql.ts"
 import { gql } from "urql"
 
 const schema = buildSchema(`
-  type Car {
-    id: String!
-    name: String!
-  }
-
-  type Retail {
-    id: String!
-    name: String!
-  }
-
-  type Model {
-    id: String!
-    name: String!
-  }
-
   type User {
     id: String!
     name: String!
-    age: String!
+    age: Int!
+  }
+
+  type Car {
+    id: Int!
+    name: String!
+    colors: [String!]!
+  }
+
+  type Bicycle {
+    id: Int!
+    name: String!
+  }
+
+  type Vehicle {
+    car(id: Int!): Car
+    cars: [Car!]!
+    bicycle(id: Int!): Bicycle
+    bicycles: [Bicycle!]!
+    speed: String!
   }
 
   type Query {
     user: User
-    cars: Cars
+    vehicle: Vehicle
   }
 
-  type Cars {
-    car: Car
-    model: Model
-    retail: Retail
-  }
 
   type Mutation {
     editUser: User
@@ -66,13 +65,83 @@ export const UserQuery = gql`
   }
 `
 
-export const ModelQuery = gql`
-query {
-  cars {
-      model {
-          id
-          name
+export const VehicleSpeedDocument = gql`
+  query {
+    vehicle {
+      speed
+    }
+  }
+`
+
+export const CarColorsDocument = gql`
+  query ($id: Int!) {
+    vehicle {
+      car(id: $id) {
+        id
+        colors
       }
-  }    
-}
+    }
+  }
+`
+
+export const CarNameDocument = gql`
+  query ($id: Int!) {
+    vehicle {
+      car(id: $id) {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const CarsDocument = gql`
+  query {
+    vehicle {
+      cars {
+        id
+        name
+        colors
+      }
+    }
+  }
+`
+
+export const BicycleNameDocument = gql`
+  query ($id: Int!) {
+    vehicle {
+      bicycle(id: $id) {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const BicyclesDocument = gql`
+  query {
+    vehicle {
+      bicycles {
+        id
+        name
+      }
+    }
+  }
+`
+
+export const GetAllVehiclesDocument = gql`
+  query ($carId: Int!, $bicycleId: Int!){
+    vehicle {
+      speed
+      car(id: $carId) {
+        id
+        name
+        colors
+      }
+      bicycle(id: $bicycleId) {
+        id
+        name
+      }
+    }
+  }
 `

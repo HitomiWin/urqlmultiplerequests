@@ -12,7 +12,7 @@ export const User: FC<UserProps> = ({ setIsUserSet }) => {
 	})
 	const setUser = useCallback(() => {
 		setIsUserSet(true)
-	}, [])
+	}, [setIsUserSet])
 	if (fetching) {
 		return null
 	}
