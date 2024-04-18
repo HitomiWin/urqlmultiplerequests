@@ -7,15 +7,15 @@
     "serve": "rm -Rf www && mkdir www && cp index.html www/index.html && node esbuild.mjs"
   },
   "dependencies": {
-    "@graphql-tools/schema": "10.0.2",
+    "@graphql-tools/schema": "10.0.3",
     "@urql/devtools": "^2.0.3",
     "@urql/exchange-execute": "2.2.2",
-    "@urql/exchange-graphcache": "6.3.3",
+    "@urql/exchange-graphcache": "7.0.1",
     "graphql": "16.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.20.0",
-    "urql": "4.0.6"
+    "urql": "4.0.7"
   },
   "type": "module",
   "devDependencies": {

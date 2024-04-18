@@ -4,15 +4,14 @@ const delayForDemo = (promise) => {
 	}).then(() => promise)
 }
 
-const Comp1 = () => delayForDemo(import("./Comp1"))
-const Comp2 = () => delayForDemo(import("./Comp2"))
+const Vehicles = () => delayForDemo(import("./Vehicles"))
 
 let routeNumber = 0
 const getRoute = () => {
 	return `route${++routeNumber}`
 }
 let isDefaultModuleSet = false
-const modules = [Comp1, Comp2].map((component) => {
+const modules = [Vehicles].map((component) => {
 	let defaultModule = false
 	if (!isDefaultModuleSet) {
 		isDefaultModuleSet = true

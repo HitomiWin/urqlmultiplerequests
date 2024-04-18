@@ -4,7 +4,6 @@ import { Provider } from "urql"
 import { initUrql } from "./initUrql"
 import { sleep } from "./sleep"
 import { createRoot } from "react-dom/client"
-import { LoadingApp } from "./LoadingApp"
 import { App } from "./App"
 import { HashRouter } from "react-router-dom"
 
@@ -19,9 +18,7 @@ const initializeApp = async () => {
 			<StrictMode>
 				<Provider value={client}>
 					<HashRouter>
-						<LoadingApp>
 							<App />
-						</LoadingApp>
 					</HashRouter>
 				</Provider>
 			</StrictMode>,
