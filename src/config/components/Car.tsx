@@ -1,24 +1,26 @@
-import React from "react"
-import { CarNameDocument } from "../../__mocked_generated__/graphql"
+import React, { Fragment } from "react"
+import { CarsDocument } from "../../__mocked_generated__/graphql"
 import { useQuery } from "urql"
 
-export const Car = ({id}: {id: string}) => {
+export const Car = () => {
 	// Run query to fetch bicycles
-	const [{ data, fetching }] = useQuery({
-		query: CarNameDocument,
-		variables: {
-			id
-		}
+	const [{ data }] = useQuery({
+		query: CarsDocument,
 	})
 
-	if (fetching) {
+	if (!data) {
 		return null
 	}
 
 	return (
 		<>
-			<pre>Car id: {id}</pre>
-			<pre>Car name: {data.vehicle.car.name}</pre>
+
+			{data.vehicle.cars.map(car => {
+				return <Fragment key={car.id}>
+				  <pre>Car id: {car.id}</pre>
+				  <pre>Car name: {car.name}</pre>
+				</Fragment>
+			})}
 		</>
 	)
 }

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "10.0.3",
+    "@urql/core": "5.0.2",
     "@urql/devtools": "^2.0.3",
     "@urql/exchange-execute": "2.2.2",
     "@urql/exchange-graphcache": "7.0.1",

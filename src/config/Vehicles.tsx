@@ -1,20 +1,25 @@
 import React from "react"
-import { CarsDocument, BicyclesDocument } from "../__mocked_generated__/graphql"
+import { CarsDocument, BicyclesDocument, VehicleSpeedDocument } from "../__mocked_generated__/graphql"
 import { useQuery } from "urql"
 import { Car } from './components/Car'
 
 const Vehicles = () => {
 	// Run query to fetch bicycles
-	const [{ data: bicycles, fetching: fetchingBicycles }] = useQuery({
+	const [{ data: bicycles, fetching: fetchingBicycles,}] = useQuery({
 		query: BicyclesDocument,
 	})
+
+    const [{ data: speed, fetching: fetchingSpeed,}] = useQuery({
+		query: VehicleSpeedDocument,
+	})
+
 
 	// Run query to fetch cars
 	const [{ data: cars, fetching: fetchingCars }] = useQuery({
 		query: CarsDocument,
 	})
 
-	if (fetchingBicycles || fetchingCars) {
+	if (fetchingCars || fetchingBicycles) {
 		return null
 	}
 
@@ -23,9 +28,8 @@ const Vehicles = () => {
 			<pre>Vehicles</pre>
 			<pre>{JSON.stringify(bicycles, null, 2)}</pre>
 			<pre>{JSON.stringify(cars, null, 2)}</pre>
-			{cars.vehicle.cars.map(car => {
-				return <Car id={car.id}/>
-			})}
+      		{/* <pre>{JSON.stringify(speed, null, 2)}</pre> */}
+		<Car />
 		</>
 	)
 }

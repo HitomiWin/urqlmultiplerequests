@@ -1,7 +1,7 @@
 import { devtoolsExchange } from "@urql/devtools"
 import { executeExchange } from "@urql/exchange-execute"
 import { cacheExchange } from "@urql/exchange-graphcache"
-import { Client } from "urql"
+import { Client, Exchange } from "@urql/core"
 import { optimistic } from "./__mocked_generated__/urql"
 import { executableSchema } from "./__mocked_generated__/graphql"
 
@@ -14,13 +14,12 @@ export const initUrql = () => {
 				optimistic,
 				keys: {
 					Cars: () => null,
-					Vehicle: () => null
+					Vehicle: () => null,
 				},
-			}),
-			executeExchange({ schema: executableSchema, context: () => ({}) }),
+			}) as Exchange,
+			executeExchange({ schema: executableSchema, context: () => ({}) }) as Exchange,
 		],
-		suspense: true
-	})
+  	})
 
 	return client
 }

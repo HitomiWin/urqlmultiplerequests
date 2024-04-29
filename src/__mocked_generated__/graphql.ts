@@ -73,27 +73,27 @@ export const VehicleSpeedDocument = gql`
   }
 `
 
-export const CarColorsDocument = gql`
-  query ($id: Int!) {
-    vehicle {
-      car(id: $id) {
-        id
-        colors
-      }
-    }
-  }
-`
+// export const CarColorsDocument = gql`
+//   query ($id: Int!) {
+//     vehicle {
+//       car(id: $id) {
+//         id
+//         colors
+//       }
+//     }
+//   }
+// `
 
-export const CarNameDocument = gql`
-  query ($id: Int!) {
-    vehicle {
-      car(id: $id) {
-        id
-        name
-      }
-    }
-  }
-`
+// export const CarNameDocument = gql`
+//   query ($id: Int!) {
+//     vehicle {
+//       car(id: $id) {
+//         id
+//         name
+//       }
+//     }
+//   }
+// `
 
 export const CarsDocument = gql`
   query {
@@ -107,16 +107,16 @@ export const CarsDocument = gql`
   }
 `
 
-export const BicycleNameDocument = gql`
-  query ($id: Int!) {
-    vehicle {
-      bicycle(id: $id) {
-        id
-        name
-      }
-    }
-  }
-`
+// export const BicycleNameDocument = gql`
+//   query ($id: Int!) {
+//     vehicle {
+//       bicycle(id: $id) {
+//         id
+//         name
+//       }
+//     }
+//   }
+// `
 
 export const BicyclesDocument = gql`
   query {
@@ -129,19 +129,19 @@ export const BicyclesDocument = gql`
   }
 `
 
-export const GetAllVehiclesDocument = gql`
-  query ($carId: Int!, $bicycleId: Int!){
-    vehicle {
-      speed
-      car(id: $carId) {
-        id
-        name
-        colors
-      }
-      bicycle(id: $bicycleId) {
-        id
-        name
-      }
-    }
-  }
-`
+// export const GetAllVehiclesDocument = gql`
+//   query ($carId: Int!, $bicycleId: Int!){
+//     vehicle {
+//       speed
+//       car(id: $carId) {
+//         id
+//         name
+//         colors
+//       }
+//       bicycle(id: $bicycleId) {
+//         id
+//         name
+//       }
+//     }
+//   }
+// `
